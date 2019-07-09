@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.house.mapper.HouseMapper" >
+  <resultMap id="BaseResultMap" type="com.house.entity.House" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="PUBDATE" property="pubdate" jdbcType="DATE" />
+    <result column="FLOORAGE" property="floorage" jdbcType="INTEGER" />
+    <result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+    <result column="STREET_ID" property="streetId" jdbcType="INTEGER" />
+    <result column="ispass" property="ispass" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, TYPE_ID, TITLE, DESCRIPTION, PRICE, PUBDATE, FLOORAGE, CONTACT, STREET_ID, 
+    ispass, isdel, path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.house.entity.HouseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from house
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.house.entity.HouseExample" >
+    delete from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.house.entity.House" >
+    insert into house (ID, USER_ID, TYPE_ID, 
+      TITLE, DESCRIPTION, PRICE, 
+      PUBDATE, FLOORAGE, CONTACT, 
+      STREET_ID, ispass, isdel, 
+      path)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{pubdate,jdbcType=DATE}, #{floorage,jdbcType=INTEGER}, #{contact,jdbcType=VARCHAR}, 
+      #{streetId,jdbcType=INTEGER}, #{ispass,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.house.entity.House" >
+    insert into house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="pubdate != null" >
+        PUBDATE,
+      </if>
+      <if test="floorage != null" >
+        FLOORAGE,
+      </if>
+      <if test="contact != null" >
+        CONTACT,
+      </if>
+      <if test="streetId != null" >
+        STREET_ID,
+      </if>
+      <if test="ispass != null" >
+        ispass,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubdate != null" >
+        #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="floorage != null" >
+        #{floorage,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="streetId != null" >
+        #{streetId,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        #{ispass,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.house.entity.HouseExample" resultType="java.lang.Integer" >
+    select count(*) from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update house
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        PRICE = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pubdate != null" >
+        PUBDATE = #{record.pubdate,jdbcType=DATE},
+      </if>
+      <if test="record.floorage != null" >
+        FLOORAGE = #{record.floorage,jdbcType=INTEGER},
+      </if>
+      <if test="record.contact != null" >
+        CONTACT = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetId != null" >
+        STREET_ID = #{record.streetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ispass != null" >
+        ispass = #{record.ispass,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdel != null" >
+        isdel = #{record.isdel,jdbcType=INTEGER},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update house
+    set ID = #{record.id,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=INTEGER},
+      TYPE_ID = #{record.typeId,jdbcType=INTEGER},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      PRICE = #{record.price,jdbcType=DECIMAL},
+      PUBDATE = #{record.pubdate,jdbcType=DATE},
+      FLOORAGE = #{record.floorage,jdbcType=INTEGER},
+      CONTACT = #{record.contact,jdbcType=VARCHAR},
+      STREET_ID = #{record.streetId,jdbcType=INTEGER},
+      ispass = #{record.ispass,jdbcType=INTEGER},
+      isdel = #{record.isdel,jdbcType=INTEGER},
+      path = #{record.path,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.entity.House" >
+    update house
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubdate != null" >
+        PUBDATE = #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="floorage != null" >
+        FLOORAGE = #{floorage,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        CONTACT = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="streetId != null" >
+        STREET_ID = #{streetId,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        ispass = #{ispass,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.house.entity.House" >
+    update house
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      TYPE_ID = #{typeId,jdbcType=INTEGER},
+      TITLE = #{title,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      PUBDATE = #{pubdate,jdbcType=DATE},
+      FLOORAGE = #{floorage,jdbcType=INTEGER},
+      CONTACT = #{contact,jdbcType=VARCHAR},
+      STREET_ID = #{streetId,jdbcType=INTEGER},
+      ispass = #{ispass,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteHouseBytypeId" parameterType="int">
+      delete from house where type_id=#{typeid}
+  </delete>
+  <select id="getHouseByUserId" parameterType="int" resultType="House">
+    SELECT h.id,h.title,h.pubdate,h.floorage,
+     h.path,h.contact,t.name AS tname,s.name AS sname,d.name AS dname,
+      CASE
+     WHEN ispass=0 THEN '待审核'
+     WHEN ispass=1 THEN '已审核'
+     END AS state
+            FROM house h INNER JOIN TYPE t ON h.type_id=t.id
+                      INNER JOIN street s ON h.street_id=s.id
+                      INNER JOIN district d ON s.district_id=d.id
+                      WHERE h.user_id=#{userId} and h.isdel=0
+  </select>
+  <select id="getHouse" parameterType="String" resultType="House">
+    SELECT h.id,h.title,h.pubdate,h.floorage,h.description,h.price, h.path,h.contact,h.type_id AS typeId, h.street_id AS streetId, d.id AS did,
+    t.name AS tname, s.`NAME` AS sname, d.name AS dname
+       FROM house h LEFT JOIN street s ON h.street_id=s.id
+             LEFT JOIN district d ON s.district_id=d.id
+             LEFT join type t on h.type_id=t.id
+             WHERE h.id=#{id}
+  </select>
+  <select id="getHouseIspass" parameterType="com.house.util.HouseBean"  resultType="House">
+    SELECT h.id,h.title,h.pubdate,h.floorage,h.description,h.price, h.path,h.contact,t.name AS tname, s.`NAME` AS sname, d.name AS dname
+     FROM house h LEFT JOIN TYPE t ON h.type_id=t.id
+     LEFT JOIN street s ON h.street_id=s.id
+             LEFT JOIN district d ON s.district_id=d.id
+               <where>
+                 <if test="ispass!=null">
+                 and ispass=#{ispass}
+                 </if>
+                 <if test="isdel!=null">
+                   and isdel=#{isdel}
+                 </if>
+                 <if test="title!=null">
+                   and title like concat('%',#{title},'%')
+                 </if>
+                 <if test="min_price!=null">
+                   and price &gt;= #{min_price}
+                 </if>
+                 <if test="max_price!=null">
+                   and price &lt;= #{max_price}
+                 </if>
+               </where>
+  </select>
+  <select id="getBorswerHouse" parameterType="com.house.util.HouseCondition" resultType="House">
+     SELECT h.id,h.title,h.pubdate,h.floorage,h.description,
+     h.price, h.path,h.contact,t.name AS tname, s.`NAME` AS sname, d.name AS dname
+     FROM house h
+     LEFT JOIN TYPE t ON h.type_id=t.id
+     LEFT JOIN street s ON h.street_id=s.id
+     LEFT JOIN district d ON s.district_id=d.id
+     WHERE ispass=1 AND isdel=0
+     <if test="title!=null">
+        and title like concat('%',#{title},'%')
+     </if>
+     <if test="typeid!=null">
+        and h.type_id=#{typeid}
+     </if>
+    <if test="districtid!=null">
+      and s.district_id=#{districtid}
+    </if>
+    <if test="streetid!=null">
+      and h.street_id=#{streetid}
+    </if>
+    <if test="min_price!=null">
+      and price &gt;=#{min_price}
+    </if>
+    <if test="max_price!=null">
+      and price &lt;=#{max_price}
+    </if>
+  </select>
+</mapper>
