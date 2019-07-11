@@ -66,7 +66,7 @@ public class HouseController {
         house.setIspass(0);//设置是否通过审核
         int temp = houseService.addHouse(house);
         if (temp>0){
-            String url="/page/guanli.jsp";
+            String url="/page/getHouse";
             return "<script>alert('发布出租房成功');location.href='"+url+"'</script>";
         }else{
             //若图片上传成功但数据添加未成功,将图片删掉

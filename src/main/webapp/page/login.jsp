@@ -31,13 +31,19 @@ rel=stylesheet type=text/css href="../css/style.css">
       <INPUT id=user_password class=text type=password name=password>
     </TD>
   </TR>
+  <tr>
+    <td class="field">手 机 号：</td>
+    <td><input type="text" class="text verycode" name="telephone" id="telephone"/>
+        <input type="button" id="btn" value="获取验证码">
+    </td>
+  </tr>
+  <tr>
+  <td class="field">验 证 码：</td>
+  <td><input type="text" class="text verycode" name="veryCode"/></td>
+  </tr>
   <TR>
     <TD colspan="2" style="color: red;text-align: center" ><h3>${info}</h3></TD>
   </TR>
-  <!--<tr>
-  <td class="field">验 证 码：</td>
-<td><input type="text" class="text verycode" name="veryCode" /></td>
-</tr>-->
   </TBODY>
 </TABLE>
 <DIV class=buttons>
@@ -53,3 +59,29 @@ rel=stylesheet type=text/css href="../css/style.css">
 <DL>
   <DT>青鸟租房 © 2018 蓝天青鸟 京ICP证1000001号</DT>
   <DD>关于我们 · 联系方式 · 意见反馈 · 帮助中心</DD></DL></DIV></BODY></HTML>
+<script src="js/jquery-1.8.3.js"></script>
+<script type="application/javascript">
+    var ObjTime;
+  $("#btn").click(function () {
+      var tel=$("#telephone").val();
+      alert(tel)
+      $.post("getCode",{"telephone":tel},function (data) {
+              if (data.result > 0) {
+                  ObjTime=setInterval("backTime()",1000);//每秒执行一次
+              }
+      },"json")
+  });
+  var time=120;
+  function backTime() {
+     if (time != 0){
+         time--;
+         $("#btn").css("padding","5px 8px");
+         $("#btn")[0].disabled=true;
+         $("#btn").val(time+"秒");
+     }else{
+         clearInterval(ObjTime);
+         $("#btn")[0].disabled=false;
+         location.reload(true);
+     }
+  }
+</script>
