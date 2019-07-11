@@ -31,16 +31,17 @@ rel=stylesheet type=text/css href="../css/style.css">
       <INPUT id=user_password class=text type=password name=password>
     </TD>
   </TR>
-  <tr>
+  <%--<tr>
     <td class="field">手 机 号：</td>
     <td><input type="text" class="text verycode" name="telephone" id="telephone"/>
-        <input type="button" id="btn" value="获取验证码">
+        <input type="button" id="btn" value="获取验证码" style="padding: 2px 6px">
+      <span id="tel" style="font-size: 14px"></span><br>
     </td>
   </tr>
   <tr>
   <td class="field">验 证 码：</td>
   <td><input type="text" class="text verycode" name="veryCode"/></td>
-  </tr>
+  </tr>--%>
   <TR>
     <TD colspan="2" style="color: red;text-align: center" ><h3>${info}</h3></TD>
   </TR>
@@ -64,24 +65,31 @@ rel=stylesheet type=text/css href="../css/style.css">
     var ObjTime;
   $("#btn").click(function () {
       var tel=$("#telephone").val();
-      alert(tel)
-      $.post("getCode",{"telephone":tel},function (data) {
-              if (data.result > 0) {
-                  ObjTime=setInterval("backTime()",1000);//每秒执行一次
-              }
-      },"json")
+      //电话号码的正则表达式,当电话合乎规范时发送请求
+      if (/^1(3|4|5|7|8)\d{9}$/.test(tel)){
+          $.post("getCode",{"telephone":tel},function (data) {
+           if (data.result > 0) {
+            ObjTime=setInterval("backTime()",1000);//每秒执行一次
+          }
+           },"json")
+      }else{
+         $("#tel").html("请输入正确的电话号码").css("color","red");
+      }
+
   });
   var time=120;
   function backTime() {
      if (time != 0){
          time--;
-         $("#btn").css("padding","5px 8px");
+         $("#btn").css("padding","2px 6px");
          $("#btn")[0].disabled=true;
          $("#btn").val(time+"秒");
      }else{
          clearInterval(ObjTime);
          $("#btn")[0].disabled=false;
-         location.reload(true);
+         //location.reload(true);
+         $("#btn").val("重新获取短信验证码")
+         time=120;
      }
   }
 </script>

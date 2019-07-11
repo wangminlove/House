@@ -20,7 +20,9 @@ public class LoginFilter implements Filter {
         String path = uri.substring(uri.lastIndexOf("/") + 1);
         //设置过滤器,当没有登陆的情况下无法进入管理页面,只能进行登录和注册操作
         if (path.equals("login.jsp")||path.equals("loginAction")
-                ||path.equals("regs.jsp")||path.equals("checkName")||path.equals("reg")||path.equals("jquery-1.8.3.js")){
+                ||path.equals("regs.jsp")||path.equals("checkName")
+                ||path.equals("reg")||path.equals("jquery-1.8.3.js")
+                ||path.equals("getCode")){
             chain.doFilter(req, resp);
         }else{
             //用户登录后同时session中有值才能进入管理页面

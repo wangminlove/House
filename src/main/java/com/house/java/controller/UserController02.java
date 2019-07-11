@@ -38,17 +38,18 @@ public class UserController02 {
     public String login(String name, String password,String veryCode, Model model, HttpSession session){
         String code = (String) session.getAttribute("code");
         if(code.equals(veryCode)){
-            Users user = userService.login(name, password);
-            if (user!=null){
-                //将查到的用户存到session作用域
-                session.setAttribute("login",user);
-                return "redirect:/page/getHouse";
-            }else{
-                model.addAttribute("info","用户名或密码不正确!");
-                return "/page/login";
-            }
+
         }else{
             model.addAttribute("info","验证码错误!");
+            return "/page/login";
+        }
+        Users user = userService.login(name, password);
+        if (user!=null){
+            //将查到的用户存到session作用域
+            session.setAttribute("login",user);
+            return "redirect:/page/getHouse";
+        }else{
+            model.addAttribute("info","用户名或密码不正确!");
             return "/page/login";
         }
     }
