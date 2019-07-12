@@ -30,19 +30,22 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
+		<!--配置别名   类型的别名就是类名-->
 		<property name="typeAliasesPackage" value="com.house.entity"></property>
 		<property name="mapperLocations" value="classpath:com/house/mapper/*.xml"></property>
 	</bean>                                                    <!--##-->
 	<!-- 配置扫描包，加载mapper代理对象 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--扫描dao层所有的接口并生成bean对象-->
 		<property name="basePackage" value="com.house.mapper"></property>
+		<!--添加sqlSessionfactroy-->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
-
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<!-- 数据源 -->
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+
 	<!-- 通知 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
