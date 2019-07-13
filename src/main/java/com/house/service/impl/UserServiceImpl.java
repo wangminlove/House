@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
     //添加用户信息
     @Override
     public int Add(Users users) {
+        String pwd = MD5Utils.md5Encrypt(users.getPassword());
+        users.setPassword(pwd);
         return usersMapper.insertSelective(users);
     }
     //前台普通用户注册
