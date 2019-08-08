@@ -345,7 +345,7 @@
      WHEN ispass=0 THEN '待审核'
      WHEN ispass=1 THEN '已审核'
      END AS state
-            FROM house h INNER JOIN TYPE t ON h.type_id=t.id
+            FROM house h INNER JOIN `type` t ON h.type_id=t.id
                       INNER JOIN street s ON h.street_id=s.id
                       INNER JOIN district d ON s.district_id=d.id
                       WHERE h.user_id=#{userId} and h.isdel=0
@@ -355,12 +355,12 @@
     t.name AS tname, s.`NAME` AS sname, d.name AS dname
        FROM house h LEFT JOIN street s ON h.street_id=s.id
              LEFT JOIN district d ON s.district_id=d.id
-             LEFT join type t on h.type_id=t.id
+             LEFT join `type` t on h.type_id=t.id
              WHERE h.id=#{id}
   </select>
   <select id="getHouseIspass" parameterType="com.house.util.HouseBean"  resultType="House">
     SELECT h.id,h.title,h.pubdate,h.floorage,h.description,h.price, h.path,h.contact,t.name AS tname, s.`NAME` AS sname, d.name AS dname
-     FROM house h LEFT JOIN TYPE t ON h.type_id=t.id
+     FROM house h LEFT JOIN `type` t ON h.type_id=t.id
      LEFT JOIN street s ON h.street_id=s.id
              LEFT JOIN district d ON s.district_id=d.id
                <where>
@@ -385,7 +385,7 @@
      SELECT h.id,h.title,h.pubdate,h.floorage,h.description,
      h.price, h.path,h.contact,t.name AS tname, s.`NAME` AS sname, d.name AS dname
      FROM house h
-     LEFT JOIN TYPE t ON h.type_id=t.id
+     LEFT JOIN `type` t ON h.type_id=t.id
      LEFT JOIN street s ON h.street_id=s.id
      LEFT JOIN district d ON s.district_id=d.id
      WHERE ispass=1 AND isdel=0
